@@ -20,4 +20,5 @@ posts/static/
 
 db.sqlite3
 .vscode/
+sent_emails/
 run_venv.bat

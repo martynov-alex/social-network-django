@@ -16,14 +16,14 @@ class Post(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='post_set_author',
+        related_name='posts_set_author',
         verbose_name='автор',
         help_text='Укажите автора поста.'
     )
     group = models.ForeignKey(
         'Group',
         on_delete=models.SET_NULL,
-        related_name='post_set_group',
+        related_name='posts_set_group',
         verbose_name='группа',
         blank=True,
         null=True,
@@ -31,8 +31,8 @@ class Post(models.Model):
     )
 
     class Meta:
-        verbose_name = 'post'
-        verbose_name_plural = 'posts'
+        verbose_name = 'пост'
+        verbose_name_plural = 'посты'
         ordering = ['-pub_date']
 
     def __str__(self):
@@ -41,27 +41,31 @@ class Post(models.Model):
 
 class Group(models.Model):
     title = models.CharField(
-        verbose_name='the title of the group',
+        verbose_name='название группы',
         max_length=200,
-        help_text='Please write a title of the group (limit 200 characters).'
+        help_text=(
+            'Пожалуйста, укажите название группы (ограничение 200 '
+            'символов)'
+        )
     )
     slug = models.SlugField(
-        verbose_name='page adress',
+        verbose_name='ссылка на группу',
         max_length=200,
         unique=True,
         help_text=(
-            'Please write an ending of the group\'s web adress like '
-            'www.blog.ru/group/<em>your_adress</em> (limit 200 characters).'
+            'Пожалуйста, укажите окончание ссылки на группу вида: '
+            'www.blog.ru/group/<em>имя группы</em> (ограничение 200 символов '
+            'на латинице)'
         )
     )
     description = models.TextField(
-        verbose_name='description',
-        help_text='Write a description for the group here.'
+        verbose_name='описание',
+        help_text='Напишите описание группы'
     )
 
     class Meta:
-        verbose_name = "group"
-        verbose_name_plural = "groups"
+        verbose_name = "группа"
+        verbose_name_plural = "группы"
 
     def __str__(self):
         return self.title
