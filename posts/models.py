@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from pytils.translit import slugify
+
 User = get_user_model()
 
 
@@ -36,7 +38,7 @@ class Post(models.Model):
         ordering = ['-pub_date']
 
     def __str__(self):
-        return self.text
+        return self.text[:15]
 
 
 class Group(models.Model):
@@ -69,3 +71,8 @@ class Group(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)[:100]
+        super().save(*args, **kwargs)
